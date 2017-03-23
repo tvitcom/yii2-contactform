@@ -1,7 +1,7 @@
 <?php
 /* @var $this \yii\web\View */
 /* @var $content string */
-
+use yii\helpers\Url;
 use backend\assets\AppAsset;
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
