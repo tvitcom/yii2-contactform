@@ -25,6 +25,17 @@ class Appeal extends \yii\db\ActiveRecord
     {
         return 'appeal';
     }
+    
+    const SCENARIO_ADM = 'login';
+    const SCENARIO_PUBLIC = 'register';
+
+    public function scenarios()
+    {
+            $scenarios = parent::scenarios();
+            $scenarios[self::SCENARIO_ADM] = ['name', 'email','content'];
+            $scenarios[self::SCENARIO_PUBLIC] = ['name', 'email', 'content'];
+            return $scenarios;
+    }
 
     /**
      * @inheritdoc
@@ -33,16 +44,16 @@ class Appeal extends \yii\db\ActiveRecord
     {
         return [
             [['name', 'email', 'content'], 'required'],
-            [['t_send'], 'safe'],
+            [['t_send'], 'safe', 'on' => self::SCENARIO_ADM],
             [['name'], 'string', 'max' => 24],
             [['email'], 'string', 'max' => 55],
-            ['email', 'email'],
+            ['email', 'email','checkDNS'=>true],
             [['homepage'], 'string', 'max' => 64],
             ['homepage', 'url', 'defaultScheme' => 'http'],
             [['content'], 'string', 'max' => 718],
             [['content'], 'string', 'min' => 12],
-            [['useragent'], 'string', 'max' => 255],
-            [['ip_addr'], 'string', 'max' => 45],
+            [['useragent'], 'string', 'max' => 255, 'on' => self::SCENARIO_ADM],
+            [['ip_addr'], 'string', 'max' => 45,'on' => self::SCENARIO_ADM],
         ];
     }
 
