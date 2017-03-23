@@ -44,7 +44,6 @@ class Appeal extends \yii\db\ActiveRecord
     {
         return [
             [['name', 'email', 'content'], 'required'],
-            //[['t_send'], 'safe', 'on' => self::SCENARIO_ADM],
             [['name'], 'string', 'max' => 24],
             [['email'], 'string', 'max' => 55],
             ['email', 'email','checkDNS'=>true],
@@ -54,16 +53,15 @@ class Appeal extends \yii\db\ActiveRecord
             [['content'], 'string', 'min' => 12],
             ['useragent', 'filter', 'filter' => function ($value) {
                     return $_SERVER['HTTP_USER_AGENT'];
-                }//, 'on' => self::SCENARIO_PUBLIC
+                }, 'on' => self::SCENARIO_PUBLIC
             ],
-            [['ip_addr'], 'string', 'max' => 45,'on' => self::SCENARIO_ADM],
             [['ip_addr'], 'filter', 'filter' => function ($value) {
                     return $_SERVER['REMOTE_ADDR'];//'
-                }//, 'on' => self::SCENARIO_PUBLIC
+                }, 'on' => self::SCENARIO_PUBLIC
             ],
              [['t_send'], 'filter', 'filter' => function ($value) {
                     return date("Y-m-d H:i:s");//'
-                }//, 'on' => self::SCENARIO_PUBLIC
+                }, 'on' => self::SCENARIO_PUBLIC
             ],       
         ];
     }
