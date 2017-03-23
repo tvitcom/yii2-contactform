@@ -52,8 +52,16 @@ class Appeal extends \yii\db\ActiveRecord
             ['homepage', 'url', 'defaultScheme' => 'http'],
             [['content'], 'string', 'max' => 718],
             [['content'], 'string', 'min' => 12],
-            [['useragent'], 'string', 'max' => 255, 'on' => self::SCENARIO_ADM],
+            //[['useragent'], 'string', 'max' => 255, 'on' => self::SCENARIO_ADM],
+            ['useragent', 'filter', 'filter' => function ($value) {
+                    return $_SERVER['HTTP_USER_AGENT'];
+                }//, 'on' => self::SCENARIO_PUBLIC
+            ],
             [['ip_addr'], 'string', 'max' => 45,'on' => self::SCENARIO_ADM],
+            [['ip_addr'], 'filter', 'filter' => function ($value) {
+                    return $_SERVER['REMOTE_ADDR'];//'
+                }//, 'on' => self::SCENARIO_PUBLIC
+            ]
         ];
     }
 
