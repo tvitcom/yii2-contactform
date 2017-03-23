@@ -33,7 +33,7 @@ class Appeal extends \yii\db\ActiveRecord
     {
             $scenarios = parent::scenarios();
             $scenarios[self::SCENARIO_ADM] = ['name', 'email','content'];
-            $scenarios[self::SCENARIO_PUBLIC] = ['name', 'email', 'content'];
+            $scenarios[self::SCENARIO_PUBLIC] = ['name', 'email', 'content','useragent','ip_addr','t_send'];
             return $scenarios;
     }
 
@@ -51,16 +51,15 @@ class Appeal extends \yii\db\ActiveRecord
             ['homepage', 'url', 'defaultScheme' => 'http'],
             [['content'], 'string', 'max' => 718],
             [['content'], 'string', 'min' => 12],
-            ['useragent', 'filter', 'filter' => function ($value) {
+            [['useragent'], 'filter', 'filter' => function ($value) {
                     return $_SERVER['HTTP_USER_AGENT'];
-                }, 'on' => self::SCENARIO_PUBLIC
-            ],
+                }, 'on' => self::SCENARIO_PUBLIC],
             [['ip_addr'], 'filter', 'filter' => function ($value) {
-                    return $_SERVER['REMOTE_ADDR'];//'
+                    return $_SERVER['REMOTE_ADDR'];
                 }, 'on' => self::SCENARIO_PUBLIC
             ],
-             [['t_send'], 'filter', 'filter' => function ($value) {
-                    return date("Y-m-d H:i:s");//'
+            [['t_send'], 'filter', 'filter' => function ($value) {
+                    return date("Y-m-d H:i:s");
                 }, 'on' => self::SCENARIO_PUBLIC
             ],       
         ];
