@@ -12,7 +12,6 @@ use common\models\Appeal;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
-//use frontend\models\ContactForm;
 
 /**
  * Site controller
@@ -118,8 +117,15 @@ class SiteController extends Controller
     {
         $model = new Appeal;
         $model->scenario = 'register';
+        
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['appeal/view', 'id' => $model->id]);
+            if ($model->sendEmail(Yii::$app->params['adminEmail'])) {
+                Yii::$app->session->setFlash('contactFormSubmitted', 'Thank you for contacting us. We will respond to you as soon as possible.');
+            } else {
+                Yii::$app->session->setFlash('error', 'There was an error sending your message.');
+            }
+
+            return $this->refresh();
         } else {
             return $this->render('contact', [
                 'model' => $model,

@@ -25,6 +25,8 @@ class Appeal extends \yii\db\ActiveRecord
     {
         return 'appeal';
     }
+
+    public $verifyCode;
     
     const SCENARIO_ADM = 'login';
     const SCENARIO_PUBLIC = 'register';
@@ -33,7 +35,7 @@ class Appeal extends \yii\db\ActiveRecord
     {
             $scenarios = parent::scenarios();
             $scenarios[self::SCENARIO_ADM] = ['name', 'email','content'];
-            $scenarios[self::SCENARIO_PUBLIC] = ['name', 'email', 'content','useragent','ip_addr','t_send'];
+            $scenarios[self::SCENARIO_PUBLIC] = ['name', 'email','homepage', 'content','useragent','ip_addr','t_send'];
             return $scenarios;
     }
 
@@ -61,7 +63,9 @@ class Appeal extends \yii\db\ActiveRecord
             [['t_send'], 'filter', 'filter' => function ($value) {
                     return date("Y-m-d H:i:s");
                 }, 'on' => self::SCENARIO_PUBLIC
-            ],       
+            ], 
+            // verifyCode needs to be entered correctly
+            ['verifyCode', 'captcha', 'on'=>self::SCENARIO_PUBLIC],      
         ];
     }
 
@@ -79,6 +83,23 @@ class Appeal extends \yii\db\ActiveRecord
             'useragent' => Yii::t('app', 'Useragent'),
             'ip_addr' => Yii::t('app', 'Ip Addr'),
             't_send' => Yii::t('app', 'T Send'),
+            'verifyCode' => 'Verification Code',
         ];
+    }
+
+    /**
+     * Sends an email to the specified email address using the information collected by this model.
+     *
+     * @param string $email the target email address
+     * @return bool whether the email was sent
+     */
+    public function sendEmail($email)
+    {
+        return Yii::$app->mailer->compose()
+            ->setTo($email)
+            ->setFrom([$this->email => $this->name])
+            ->setSubject('From customer '.$this->name.' ['.$this->ip_addr.']')
+            ->setTextBody($this->content)
+            ->send();
     }
 }
