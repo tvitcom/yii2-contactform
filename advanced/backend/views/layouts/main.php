@@ -35,12 +35,11 @@ AppAsset::register($this);
             ]);
             $menuItems = [
                 ['label' => 'Home', 'url' => '/'],
-                //['label' => 'Admin', 'url' => ['/site/index']],
             ];
             if (Yii::$app->user->isGuest) {
                 $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
             } else {
-                $menuItems[] = ['label' => 'gii', 'url' => ['/gii']];
+                if (YII_DEBUG) $menuItems[] = ['label' => 'gii', 'url' => ['/gii']];
                 $menuItems[] = '<li>'
                         . Html::beginForm(['/site/logout'], 'post')
                         . Html::submitButton(

@@ -36,6 +36,9 @@ class AppealController extends Controller
     {
         $dataProvider = new ActiveDataProvider([
             'query' => Appeal::find(),
+            'pagination' => [
+                'pageSize' => 25,
+            ],
         ]);
 
         return $this->render('index', [
