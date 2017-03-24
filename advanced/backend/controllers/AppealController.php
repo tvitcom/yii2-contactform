@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 use Yii;
+use yii\data\Sort;
 use common\models\Appeal;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
@@ -34,10 +35,16 @@ class AppealController extends Controller
      */
     public function actionIndex()
     {
+
         $dataProvider = new ActiveDataProvider([
             'query' => Appeal::find(),
             'pagination' => [
                 'pageSize' => 25,
+            ],
+            'sort' => [
+                'defaultOrder' => [
+                    'id' => SORT_DESC,
+                ],
             ],
         ]);
 
