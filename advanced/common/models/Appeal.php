@@ -12,6 +12,7 @@ use yii\helpers\Html;
  * @property string $email
  * @property string $homepage
  * @property string $content
+ * @property string $filename
  * @property string $useragent
  * @property string $ip_addr
  * @property string $t_send
@@ -56,6 +57,7 @@ class Appeal extends \yii\db\ActiveRecord
                     return Html::encode($value);
                 }, 'on' => self::SCENARIO_PUBLIC],
             [['content'], 'string', 'min' => 12],
+            [['filename'], 'string', 'max' => 128],          
             [['useragent'], 'filter', 'filter' => function ($value) {
                     return $_SERVER['HTTP_USER_AGENT'];
                 }, 'on' => self::SCENARIO_PUBLIC],
@@ -83,6 +85,7 @@ class Appeal extends \yii\db\ActiveRecord
             'email' => Yii::t('app', 'Email'),
             'homepage' => Yii::t('app', 'Homepage'),
             'content' => Yii::t('app', 'Content'),
+            'filename' => Yii::t('app', 'Filename'),
             'useragent' => Yii::t('app', 'Useragent'),
             'ip_addr' => Yii::t('app', 'Ip Addr'),
             't_send' => Yii::t('app', 'T Send'),
