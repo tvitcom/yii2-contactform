@@ -3,7 +3,7 @@
 namespace common\models;
 
 use Yii;
-
+use yii\helpers\Html;
 /**
  * This is the model class for table "appeal".
  *
@@ -52,6 +52,9 @@ class Appeal extends \yii\db\ActiveRecord
             [['homepage'], 'string', 'max' => 64],
             ['homepage', 'url', 'defaultScheme' => 'http'],
             [['content'], 'string', 'max' => 718],
+            [['content'], 'filter', 'filter' => function ($value) {
+                    return Html::encode($value);
+                }, 'on' => self::SCENARIO_PUBLIC],
             [['content'], 'string', 'min' => 12],
             [['useragent'], 'filter', 'filter' => function ($value) {
                     return $_SERVER['HTTP_USER_AGENT'];
