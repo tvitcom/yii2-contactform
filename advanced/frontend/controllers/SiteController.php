@@ -167,20 +167,18 @@ class SiteController extends Controller
 
     protected function handleUploadFile(Appeal $model)
     {
-        if ($model->load(Yii::$app->request->post())) {
-            $model->upload = UploadedFile::getInstance($model, 'upload');
+        $model->upload = UploadedFile::getInstance($model, 'upload');
 
-            if ($model->validate()) {
-                $filePath = 'upload/' . $model->upload->baseName . '.' . $model->upload->extension;
-                $fileName = $model->upload->baseName . '.' . $model->upload->extension;
-                if ($model->upload->saveAs($filePath)) {
-                    $model->filename = $fileName;
-                }
-                if ($model->save(false)) {
-                    return true; 
-                } else {
-                    return false;    
-                }
+        if ($model->validate()) {
+            $filePath = 'upload/' . $model->upload->baseName . '.' . $model->upload->extension;
+            $fileName = $model->upload->baseName . '.' . $model->upload->extension;
+            if ($model->upload->saveAs($filePath)) {
+                $model->filename = $fileName;
+            }
+            if ($model->save(false)) {
+                return true; 
+            } else {
+                return false;    
             }
         }
     }
