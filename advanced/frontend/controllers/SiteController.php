@@ -170,8 +170,8 @@ class SiteController extends Controller
         $model->upload = UploadedFile::getInstance($model, 'upload');
 
         if ($model->validate()) {
-            $filePath = 'upload/' . $model->upload->baseName . '.' . $model->upload->extension;
-            $fileName = $model->upload->baseName . '.' . $model->upload->extension;
+            $fileName = $this->handleNewFilename($model->upload->baseName) . '.' . $model->upload->extension;
+            $filePath = 'upload/' . $fileName;
             if ($model->upload->saveAs($filePath)) {
                 $model->filename = $fileName;
             }
@@ -181,6 +181,10 @@ class SiteController extends Controller
                 return false;    
             }
         }
+    }
+    
+    protected function handleNewFilename($name) {
+        return strtotime('now').'-'.md5($name);
     }
 
     /**
