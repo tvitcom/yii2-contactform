@@ -12,6 +12,7 @@ use common\models\Appeal;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
+use yii\web\UploadedFile;
 
 /**
  * Site controller
@@ -118,19 +119,33 @@ class SiteController extends Controller
         $model = new Appeal;
         $model->scenario = 'register';
         
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            if ($model->sendEmail(Yii::$app->params['adminEmail'])) {
+        if ($model->load(Yii::$app->request->post())) {
+           if ($this->handleUploadFile($model) && $model->sendEmail(Yii::$app->params['adminEmail'])) {
                 Yii::$app->session->setFlash('contactFormSubmitted', 'Thank you for contacting us. We will respond to you as soon as possible.');
             } else {
                 Yii::$app->session->setFlash('error', 'There was an error sending your message.');
             }
-
-            return $this->refresh();
+           return $this->refresh();
         } else {
             return $this->render('contact', [
                 'model' => $model,
             ]);
         }
+//        if ($model->load(Yii::$app->request->post())) {
+//            $model->filename = UploadedFile::getInstance($model, 'filename');
+//            if ($model->upload()) Yii::$app->session->setFlash('error', 'There was an error saved model.'); ;
+//            if ($model->save() && $model->sendEmail(Yii::$app->params['adminEmail'])) {
+//                Yii::$app->session->setFlash('contactFormSubmitted', 'Thank you for contacting us. We will respond to you as soon as possible.');
+//            } else {
+//                Yii::$app->session->setFlash('error', 'There was an error sending your message.');
+//           }
+//
+//           return $this->refresh();
+//        } else {
+//            return $this->render('contact', [
+//                'model' => $model,
+//            ]);
+//        }
         
         // -----------------Yo -----------------
         
@@ -148,6 +163,26 @@ class SiteController extends Controller
 //                'model' => $model,
 //            ]);
 //        }
+    }
+
+    protected function handleUploadFile(Appeal $model)
+    {
+        if ($model->load(Yii::$app->request->post())) {
+            $model->upload = UploadedFile::getInstance($model, 'upload');
+
+            if ($model->validate()) {
+                $filePath = 'upload/' . $model->upload->baseName . '.' . $model->upload->extension;
+                $fileName = $model->upload->baseName . '.' . $model->upload->extension;
+                if ($model->upload->saveAs($filePath)) {
+                    $model->filename = $fileName;
+                }
+                if ($model->save(false)) {
+                    return true; 
+                } else {
+                    return false;    
+                }
+            }
+        }
     }
 
     /**

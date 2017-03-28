@@ -33,6 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'email:email',
             'homepage',
             'content',
+            'filename',
             'useragent',
             'ip_addr',
             't_send',

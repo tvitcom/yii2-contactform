@@ -1,8 +1,10 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 use yii\captcha\Captcha;
+use kartik\file\FileInput;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Appeal */
@@ -40,7 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <div class="appeal-form">
 
-            <?php $form = ActiveForm::begin(); ?>
+            <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 
             <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
@@ -50,10 +52,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <?= $form->field($model, 'content')->textarea(['rows' => 6,'maxlength' => true]) ?>
 
-            <?= $form->field($model, 'verifyCode')->widget(Captcha::className(), [
-                            'template' => '<div class="row"><div class="col-lg-2">{image}</div><div class="col-lg-6">{input}</div></div>',
-                        ]) ?>
-
+            <?= $form->field($model, 'upload')->fileInput() ?>
+            
             <div class="form-group">
                 <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Send') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
             </div>

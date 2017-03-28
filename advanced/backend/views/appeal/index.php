@@ -23,6 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'name',
             'email:email',
+            'filename',
             //'homepage',
             //'content',
             // 'useragent',

@@ -4,6 +4,7 @@ namespace common\models;
 
 use Yii;
 use yii\helpers\Html;
+use yii\web\UploadedFile;
 /**
  * This is the model class for table "appeal".
  *
@@ -28,6 +29,7 @@ class Appeal extends \yii\db\ActiveRecord
     }
 
     public $verifyCode;
+    public $upload;
     
     const SCENARIO_ADM = 'login';
     const SCENARIO_PUBLIC = 'register';
@@ -35,8 +37,8 @@ class Appeal extends \yii\db\ActiveRecord
     public function scenarios()
     {
             $scenarios = parent::scenarios();
-            $scenarios[self::SCENARIO_ADM] = ['name', 'email','content'];
-            $scenarios[self::SCENARIO_PUBLIC] = ['name', 'email','homepage', 'content','useragent','ip_addr','t_send'];
+            $scenarios[self::SCENARIO_ADM] = ['name', 'email','content','filename'];
+            $scenarios[self::SCENARIO_PUBLIC] = ['name', 'email','homepage', 'content','upload','useragent','ip_addr','t_send'];
             return $scenarios;
     }
 
@@ -57,7 +59,7 @@ class Appeal extends \yii\db\ActiveRecord
                     return Html::encode($value);
                 }, 'on' => self::SCENARIO_PUBLIC],
             [['content'], 'string', 'min' => 12],
-            [['filename'], 'string', 'max' => 128],          
+            [['upload'], 'file'/*, 'skipOnEmpty' => true*/, 'extensions' => 'png, jpg, gif, txt','on'=>self::SCENARIO_PUBLIC],
             [['useragent'], 'filter', 'filter' => function ($value) {
                     return $_SERVER['HTTP_USER_AGENT'];
                 }, 'on' => self::SCENARIO_PUBLIC],
@@ -85,7 +87,7 @@ class Appeal extends \yii\db\ActiveRecord
             'email' => Yii::t('app', 'Email'),
             'homepage' => Yii::t('app', 'Homepage'),
             'content' => Yii::t('app', 'Content'),
-            'filename' => Yii::t('app', 'Filename'),
+            'upload' => Yii::t('app', 'File to upload'),
             'useragent' => Yii::t('app', 'Useragent'),
             'ip_addr' => Yii::t('app', 'Ip Addr'),
             't_send' => Yii::t('app', 'T Send'),
@@ -107,5 +109,13 @@ class Appeal extends \yii\db\ActiveRecord
             ->setSubject('From customer '.$this->name.' ['.$this->ip_addr.']')
             ->setTextBody($this->content)
             ->send();
+    }
+    
+    /*
+     * Upload functionality
+    */
+    public function upload()
+    { 
+        return;
     }
 }

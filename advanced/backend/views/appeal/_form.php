@@ -17,6 +17,8 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'homepage')->textInput(['maxlength' => true]) ?>
+    
+            <?= $form->field($model, 'filename')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'content')->textarea(['rows' => 6,'maxlength' => true]) ?>
 
