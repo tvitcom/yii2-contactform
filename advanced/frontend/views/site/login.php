@@ -14,6 +14,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>Please fill out the following fields to login:</p>
+    <p><?=Html::encode(Yii::$app->getSecurity()->generatePasswordHash('pass_to_app3254*%'))?></p>
 
     <div class="row">
         <div class="col-lg-5">

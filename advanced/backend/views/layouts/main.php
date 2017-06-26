@@ -20,6 +20,15 @@ AppAsset::register($this);
         <?= Html::csrfMetaTags() ?>
         <title><?= Html::encode($this->title) ?></title>
         <?php $this->head() ?>
+        
+        <!-- Loading Flat UI -->
+    <link href="http://192.168.10.181/ownpresentation/css/flat-ui.css" rel="stylesheet">
+    
+    <link href="http://192.168.10.181/ownpresentation/css/style.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link href="http://192.168.10.181/ownpresentation/css/font-awesome.css" rel="stylesheet">
+        
     </head>
     <body>
         <?php $this->beginBody() ?>

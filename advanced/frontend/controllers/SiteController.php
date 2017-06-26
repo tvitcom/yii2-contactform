@@ -184,7 +184,7 @@ class SiteController extends Controller
     }
     
     protected function handleNewFilename($name) {
-        return strtotime('now').'-'.md5($name);
+        return time().'-'.md5($name);
     }
 
     /**

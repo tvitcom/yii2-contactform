@@ -59,7 +59,7 @@ class Appeal extends \yii\db\ActiveRecord
                     return Html::encode($value);
                 }, 'on' => self::SCENARIO_PUBLIC],
             [['content'], 'string', 'min' => 12],
-            [['upload'], 'file'/*, 'skipOnEmpty' => true*/, 'extensions' => 'png, jpg, gif, txt','on'=>self::SCENARIO_PUBLIC],
+            [['upload'], 'file', 'extensions' => 'png, jpg, gif, txt','on'=>self::SCENARIO_PUBLIC],
             [['useragent'], 'filter', 'filter' => function ($value) {
                     return $_SERVER['HTTP_USER_AGENT'];
                 }, 'on' => self::SCENARIO_PUBLIC],

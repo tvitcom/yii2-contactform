@@ -21,6 +21,25 @@ AppAsset::register($this);
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
+ 
+    <link href="/css/ownpresentation_style.css" rel="stylesheet">
+    <!-- Loading Flat UI -->
+    <link href="http://192.168.10.181/ownpresentation/css/flat-ui.css" rel="stylesheet">
+    
+    <link href="http://192.168.10.181/ownpresentation/css/style.css" rel="stylesheet">
+    <link href="http://192.168.10.181/ownpresentation/css/style-contact.css" rel="stylesheet">
+    <link href="http://192.168.10.181/ownpresentation/css/style-content.css" rel="stylesheet">
+    <link href="http://192.168.10.181/ownpresentation/css/style-footers.css" rel="stylesheet">
+    <link href="http://192.168.10.181/ownpresentation/css/style-headers.css" rel="stylesheet">
+    <link href="http://192.168.10.181/ownpresentation/css/style-portfolios.css" rel="stylesheet">
+    <link href="http://192.168.10.181/ownpresentation/css/style-pricing.css" rel="stylesheet">
+    <link href="http://192.168.10.181/ownpresentation/css/style-team.css" rel="stylesheet">
+    <link href="http://192.168.10.181/ownpresentation/css/style-dividers.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link href="http://192.168.10.181/ownpresentation/css/font-awesome.css" rel="stylesheet">
+    
+    
 </head>
 <body>
 <?php $this->beginBody() ?>
