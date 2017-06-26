@@ -1,3 +1,6 @@
 # netbeans project files
 nbproject
 
+# web/upload and assets
+advansed/web/upload*
+advanced/web/assets*
